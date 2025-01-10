@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import time
-from getProductLink import extract_clickable_elements
+from getProductLink import extract_clickable_elements, is_product_url
 
 
 def write_products_to_file(products, filename="products.txt"):
@@ -27,8 +27,7 @@ def get_product_links(domain, page_source, keyword:str):
     links = [obj["href"] for obj in clickable_elements if obj['type']=='link']
     buttons = [obj for obj in clickable_elements if obj['type']=='button']
 
-    write_products_to_file(links)
-
+    write_products_to_file(is_product_url(links))
 
     # if detect_pagination(buttons):
     #     # get_product_urls()

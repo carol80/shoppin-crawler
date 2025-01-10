@@ -4,12 +4,12 @@ from mockSearch import search_keyword_using_selenium
 
 searchValue = ["jacket", "shirt"]
 websites = [
-    "https://www.amazon.in",
-    "https://www.flipkart.com",
-    "https://www.ajio.com",
-    "https://www.walmart.com",
-    "https://www.ebay.com",
-    "https://www.aliexpress.com"
+    # "https://www.amazon.in",
+    # "https://www.flipkart.com",
+    # "https://www.ajio.com",
+    # "https://www.walmart.com",
+    # "https://www.ebay.com",
+    # "https://www.aliexpress.com",
     "https://www.bewakoof.com"
 ]
 threading_active=False

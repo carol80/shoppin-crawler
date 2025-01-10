@@ -1,6 +1,11 @@
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import unquote, urlparse, parse_qsl, urljoin
+import re
+
+# product patterns in most of the common e-commerce websites
+product_patterns = r"(\/(dp|product|gp\/product|p|ip|products|itm|pages\/item|item)\/.*)"
+compiled_pattern = re.compile(product_patterns)
 
 
 def handle_redirects(domain, href:str):
@@ -56,3 +61,12 @@ def extract_clickable_elements(domain, HTMLPage, keywords):
     #     clickable_elements.append({'type': 'button', 'text': text})
 
     return clickable_elements
+
+
+def is_product_url(urls_from_clickable_elements):
+    matched_links = []
+    for url in urls_from_clickable_elements:
+        if compiled_pattern.search(url):
+            matched_links.append(url)
+
+    return matched_links
