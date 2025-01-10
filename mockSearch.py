@@ -21,7 +21,7 @@ def search_keyword_using_selenium(url, keyword):
     # Find the search input element using XPath with placeholder containing "Search"
     try:
         # time.sleep(30)
-        search_box = driver.find_element(By.XPATH, "//input[contains(@placeholder, 'Search') or contains(@name, 'Search') or contains(@placeholder, 'Find')]")
+        search_box = driver.find_element(By.XPATH, "//input[contains(@placeholder, 'Search') or contains(@name, 'Search') or contains(@value, 'Search') or contains(@aria-label, 'Search')]")
     except:
         print("Search box not found.", url)
         driver.quit()

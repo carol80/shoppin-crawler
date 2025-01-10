@@ -4,7 +4,7 @@ from urllib.parse import unquote, urlparse, parse_qsl, urljoin
 import re
 
 # product patterns in most of the common e-commerce websites
-product_patterns = r"(\/(dp|product|gp\/product|p|ip|products|itm|pages\/item|item)\/.*)"
+product_patterns = r'\/(dp|product|gp\/product|p|ip|products|itm|pages\/item|item)\/.*|(product-detail|p-[\w\d]+)$'
 compiled_pattern = re.compile(product_patterns)
 
 
@@ -43,7 +43,7 @@ def extract_clickable_elements(domain, HTMLPage, keywords):
         text = link.text.strip()
         
         try:
-            if any((key in text.lower()) or (key in href.lower()) for key in keywords) and text not in ss:
+            if text and href and any((key in text.lower()) or (key in href.lower()) for key in keywords) and text not in ss:
                 href = handle_redirects(domain, href)
                 if href:
                     clickable_elements.append({'type': 'link', 'text': text, 'href': href})
