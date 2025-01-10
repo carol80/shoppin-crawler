@@ -1,14 +1,38 @@
 import requests
 from bs4 import BeautifulSoup
 import time
+from getProductLink import extract_clickable_elements
 
 
-def get_product_links(page_source):
+def write_products_to_file(products, filename="products.txt"):
+    try:
+        with open(filename, "a") as file:  # "a" for append mode
+            file.writelines("\n".join(products))
+        print(f"Content appended to '{filename}' successfully.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+
+def detect_pagination(buttons):
     pass
 
 
-def detect_pagination(page_source):
+def detect_infinite_scroll(page_source):
     pass
+
+
+def get_product_links(domain, page_source, keyword:str):
+    products = []
+    clickable_elements = extract_clickable_elements(domain, page_source, keyword.split())
+    links = [obj["href"] for obj in clickable_elements if obj['type']=='link']
+    buttons = [obj for obj in clickable_elements if obj['type']=='button']
+
+    write_products_to_file(links)
+
+
+    # if detect_pagination(buttons):
+    #     # get_product_urls()
+    #     pass
 
 
 def get_product_urls(base_url:str, search_query:str, page_number:int=2):

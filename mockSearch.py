@@ -8,6 +8,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.chrome.options import Options
+from fetchItems import get_product_links
 
 
 def search_keyword_using_selenium(url, keyword):
@@ -31,6 +32,10 @@ def search_keyword_using_selenium(url, keyword):
     time.sleep(5)
 
     page_source = driver.page_source
+    get_product_links(domain=url, page_source=page_source, keyword=keyword)
+
+    # if pagination is there, do something
+
     driver.quit()
 
 
