@@ -21,7 +21,7 @@ def search_keyword_using_selenium(url, keyword):
         # time.sleep(30)
         search_box = driver.find_element(By.XPATH, "//input[contains(@placeholder, 'Search')]")
     except:
-        print("Search box not found.")
+        print("Search box not found.", url)
         driver.quit()
         return
 
@@ -29,6 +29,8 @@ def search_keyword_using_selenium(url, keyword):
     search_box.send_keys(keyword)
     search_box.send_keys(Keys.RETURN)
     time.sleep(5)
+
+    page_source = driver.page_source
     driver.quit()
 
 

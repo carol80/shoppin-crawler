@@ -18,4 +18,9 @@ keyword = " ".join(list(itertools.chain.from_iterable(searchItems)))
 
 threads = []
 for url in websites:
-    search_keyword_using_selenium(url, keyword)
+    t = threading.Thread(target=search_keyword_using_selenium, args=(url, keyword, ))
+    threads.append(t)
+    t.start()
+
+for t in threads:
+    t.join()
