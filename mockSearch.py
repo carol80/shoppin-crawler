@@ -14,6 +14,7 @@ from fetchItems import get_product_links
 def search_keyword_using_selenium(url, keyword):
     chrome_options = Options()
     chrome_options.add_argument("--incognito")
+    # chrome_options.add_argument("--headless")
     driver = webdriver.Chrome(options=chrome_options)
     driver.get(url)
     driver.maximize_window()

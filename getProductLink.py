@@ -4,7 +4,7 @@ from urllib.parse import unquote, urlparse, parse_qsl, urljoin
 import re
 
 # product patterns in most of the common e-commerce websites
-product_patterns = r'\/(dp|product|gp\/product|p|ip|products|itm|pages\/item|item)\/.*|(product-detail|p-[\w\d]+)$'
+product_patterns = r'\/(dp|product|gp\/product|p|ip|products|itm|pages\/item|item)\/.*|(buy|product-detail|p-[\w\d]+)$'
 compiled_pattern = re.compile(product_patterns)
 
 
