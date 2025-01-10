@@ -9,9 +9,11 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.chrome.options import Options
 from fetchItems import get_product_links
+import hashlib
 
 
-def search_keyword_using_selenium(url, keyword):
+def search_keyword_using_selenium(url, keyword, products_with_domains):
+    depth_for_infinite_scroll = 5
     chrome_options = Options()
     chrome_options.add_argument("--incognito")
     # chrome_options.add_argument("--headless")
@@ -33,13 +35,31 @@ def search_keyword_using_selenium(url, keyword):
     search_box.send_keys(Keys.RETURN)
     time.sleep(5)
 
+
+    # if infinite scroll, do something
     page_source = driver.page_source
-    get_product_links(domain=url, page_source=page_source, keyword=keyword)
+    page_hashcode = hash_page_source(page_source)
+
+    while depth_for_infinite_scroll:
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        time.sleep(4)
+        curr_page_source = driver.page_source
+        curr_page_hashcode = hash_page_source(curr_page_source)
+        if page_hashcode == curr_page_hashcode:
+            break
+        page_hashcode = curr_page_hashcode
+        depth_for_infinite_scroll -= 1
+
+    products = get_product_links(domain=url, page_source=page_source, keyword=keyword)
 
     # if pagination is there, do something
 
     driver.quit()
+    products_with_domains[url] = products
 
+
+def hash_page_source(page_source):
+    return hashlib.md5(page_source.encode('utf-8')).hexdigest()
 
 
 def initialize_chrome_driver_instance():

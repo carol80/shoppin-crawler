@@ -1,6 +1,7 @@
 import requests
-from bs4 import BeautifulSoup
 import time
+import json
+from bs4 import BeautifulSoup
 from getProductLink import extract_clickable_elements, is_product_url
 
 
@@ -8,7 +9,16 @@ def write_products_to_file(products, filename="products.txt"):
     try:
         with open(filename, "a") as file:  # "a" for append mode
             file.writelines("\n".join(products))
-        print(f"Content appended to '{filename}' successfully.")
+        print(f"Content appended to '{filename}' successfully!!")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+
+def write_products_to_JSON(products, filename="products.json"):
+    try:
+        with open(filename, 'w') as json_file:
+            json.dump(products, json_file, indent=4)
+        print(f"Content added to '{filename}' successfully!!")
     except Exception as e:
         print(f"An error occurred: {e}")
 
@@ -27,11 +37,9 @@ def get_product_links(domain, page_source, keyword:str):
     links = [obj["href"] for obj in clickable_elements if obj['type']=='link']
     buttons = [obj for obj in clickable_elements if obj['type']=='button']
 
-    write_products_to_file(is_product_url(links))
-
-    # if detect_pagination(buttons):
-    #     # get_product_urls()
-    #     pass
+    identified_products = is_product_url(links)
+    write_products_to_file(identified_products)
+    return identified_products
 
 
 def get_product_urls(base_url:str, search_query:str, page_number:int=2):
