@@ -36,12 +36,20 @@ def extract_clickable_elements(domain, HTMLPage, keywords):
     for link in soup.find_all('a'):
         href = link.get('href')
         text = link.text.strip()
-        if any(key in text.lower() for key in keywords) and text not in ss:
-            href = handle_redirects(domain, href)
-            if href:
-                clickable_elements.append({'type': 'link', 'text': text, 'href': href})
-                ss[text] = href
+        
+        try:
+            if any((key in text.lower()) or (key in href.lower()) for key in keywords) and text not in ss:
+                href = handle_redirects(domain, href)
+                if href:
+                    clickable_elements.append({'type': 'link', 'text': text, 'href': href})
+                    ss[text] = href
+        except Exception as e:
+            print(repr(e))
 
+    # print(soup.find_all('a'))
+    # print("------------------------------------------------------------------------------------------------------------------")
+    # print(clickable_elements)
+    
     # # Extract buttons
     # for button in soup.find_all(['button', 'input']):
     #     text = button.text.strip() if button.name == 'button' else button.get('value', '').strip()
