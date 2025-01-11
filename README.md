@@ -35,6 +35,8 @@ A Web Crawler that creates a DB of all the products with given keywords in a giv
     - Integrate saucelabs or browserstack: Currently all the browsers are launched locally limiting the no. of parallel instances. (So integrating it with a cloud provider could speed up the process).
     - Discover the search-url and make API calls to fetch the page-source instead of using selenium. Could be faster.
     - Enhance the product and pagination finding regexes.
+    - in most of the websites, we have captcha, or "not a robot verification": look for ways to bypass that.
+    - Integrate Celery or have a redis/rabbitmq queue: Since each of these tasks are time consuming, we can add each website as a task. This way, it could help us scale the crawler to take in more load.
 
 
 ### Prerequisite
