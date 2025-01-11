@@ -30,7 +30,7 @@ def search_keyword_using_selenium(url, keyword, products_with_domains):
         driver.quit()
         return
 
-    search_box.clear()
+    # search_box.clear()
     search_box.send_keys(keyword)
     search_box.send_keys(Keys.RETURN)
     time.sleep(5)

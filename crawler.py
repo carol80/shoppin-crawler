@@ -4,28 +4,27 @@ import itertools
 from mockSearch import search_keyword_using_selenium
 from fetchItems import write_products_to_JSON
 
-searchValue = ["jacket", "shirt"]
+searchValue = ["jacket", "black"]
 websites = [
-    # "https://www.amazon.in",
+    "https://www.amazon.in",
     "https://www.flipkart.com",
-    # "https://www.ajio.com",
-    # "https://www.ebay.com",
-    # "https://www.bewakoof.com",
-    # "https://www.myntra.com",
-    # "https://www.nykaa.com",
-    # "https://www.meesho.com",
-    # "https://www.firstcry.com",
-    # "https://www.tatacliq.com"
+    "https://www.ajio.com",
+    "https://www.ebay.com",
+    "https://www.bewakoof.com",
+    "https://www.myntra.com",
+    "https://www.nykaa.com",
+    "https://www.firstcry.com",
+    "https://www.tatacliq.com",
 ]
 threading_active=False
-multiprocessing_active=True
+multiprocessing_active=False
 products_with_domains = dict()
 
 
 searchItems = [searchVal.split() for searchVal in searchValue]
 keyword = " ".join(list(itertools.chain.from_iterable(searchItems)))
 
-
+print("Please be patient, it takes time to launch the browser. Thanks!")
 if threading_active:
     threads = []
     for url in websites:
@@ -43,7 +42,7 @@ elif multiprocessing_active:
     manager = multiprocessing.Manager()
     products_with_domains = manager.dict()
     processes = []
-    pool = multiprocessing.Pool(processes=4)
+    pool = multiprocessing.Pool(processes=3)
 
     for url in websites:
         pool.apply_async(search_keyword_using_selenium, args=(url, keyword, products_with_domains))
